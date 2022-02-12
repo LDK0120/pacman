@@ -30,8 +30,8 @@ const squares = [];
 const score = document.querySelector(".score");
 const currentScore = 0;
 
-const width = 285;
-const height = 315;
+const width = 19;
+const height = 21;
 
 function createSquares () {
     for (let i=0; i< gridLayout.length; i++) {
@@ -67,21 +67,25 @@ function move(event) {
 
     switch (keyPressed) {
         case "ArrowDown":
-            if (position < 399) {
+            if (position < 380) {
             position += 19;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
-            } 
+            } else {
+                alert("game over");
+            }
             break;
         case "ArrowUp":
             if (position >= 19) {
             position -= 19;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
-            } 
+            } else {
+                alert("game over");
+            }
             break;
         case "ArrowLeft":
-            if (position % 19 !== 0) {
+            if (position % width !== 0) {
             position -= 1;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
@@ -90,7 +94,7 @@ function move(event) {
             }
             break;
         case "ArrowRight":
-            if (position % 19 <  18) {
+            if (position % width <  18) {
             position += 1;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
