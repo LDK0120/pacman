@@ -1,0 +1,48 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  --color-wall: #054686;
+  --color-empty: #011f3c;
+  --color-pac-dot: gold;
+  --color-pac-man: rgb(37, 243, 10);
+  --color-power-pellet: red;
+  --color-label: #fe992e;
+}
+
+body {
+  font-family: "Orbitron", sans-serif;
+  font-size: 16px;
+  background-color: var(--color-empty);
+  text-align: center;
+}
+
+.container {
+  margin: 0 auto;
+  border: 1px solid white; /*take this out later*/
+  width: 285px;
+  height: 315px;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-label);
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-label);
+}
+
+.grid {
+  width: 100%;
+  height: 100%;
+}
+
+.square {
+  width: 15px;
+  height: 15px;
+}
