@@ -71,20 +71,22 @@ function move(event) {
             position += 19;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
-            }
+            } 
             break;
         case "ArrowUp":
             if (position >= 19) {
             position -= 19;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
-            }
+            } 
             break;
         case "ArrowLeft":
             if (position % 19 !== 0) {
             position -= 1;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
+            } else {
+                alert("game over");
             }
             break;
         case "ArrowRight":
@@ -92,6 +94,8 @@ function move(event) {
             position += 1;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
+            } else {
+                alert("game over");
             }
             break;
     }
@@ -99,4 +103,6 @@ function move(event) {
 
 document.addEventListener("keyup", move);
 
-//Next: need to make sure pacmand does not move if there is a wall or an empty space
+//need to make sure pacmand is blocked from moving if there is a wall.
+//need to generate 4 ghosts where pacman and power-pellet are not present.
+
