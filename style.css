@@ -77,7 +77,6 @@ li {
 .btn:hover,
 .btn:focus {
   transform: scale(0.9);
-  color: rgb(0, 26, 255);
 }
 
 .wall {
