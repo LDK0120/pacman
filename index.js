@@ -28,7 +28,7 @@ const container = document.querySelector(".container");
 const squares = [];
 
 const score = document.querySelector(".score");
-const currentScore = 0;
+let currentScore = 0;
 
 const width = 19;
 const height = 21;
@@ -59,6 +59,20 @@ let position = 180;
 squares[180].classList.remove("pac-dot");
 squares[180].classList.add("pac-man");
 
+function eatPacDot() {
+
+    if (squares[position].classList.contains("pac-dot")) {
+        squares[position].classList.remove("pac-dot");
+        currentScore++;
+        score.innerHTML = `${currentScore}`;
+        squares[position].classList.add("pac-man");
+    } else {
+        squares[position].classList.add("pac-man");
+    }
+        
+
+}
+
 
 //allow player to move pacman:
 function move(event) {
@@ -69,15 +83,14 @@ function move(event) {
             if (position < 380 && squares[position + 19].classList.contains("wall") !== true) {
             squares[position].classList.remove("pac-man");
             position += 19;
-            squares[position].classList.remove("pac-dot");
-            squares[position].classList.add("pac-man");
+            eatPacDot();
             }
             break;
         case "ArrowUp":
             if (position >= 19 && squares[position - 19].classList.contains("wall") !== true) {
             squares[position].classList.remove("pac-man");
             position -= 19;
-            squares[position].classList.remove("pac-dot");
+            eatPacDot();
             squares[position].classList.add("pac-man");
             }
             break;
@@ -85,7 +98,7 @@ function move(event) {
             if (position % width !== 0 && squares[position - 1].classList.contains("wall") !== true) {
             squares[position].classList.remove("pac-man");
             position -= 1;
-            squares[position].classList.remove("pac-dot");
+            eatPacDot();
             squares[position].classList.add("pac-man");
             } else if (position === 171) {
                 squares[position].classList.remove("pac-man");
@@ -97,7 +110,7 @@ function move(event) {
             if (position % width <  18 && squares[position + 1].classList.contains("wall") !== true) {
             squares[position].classList.remove("pac-man");
             position += 1;
-            squares[position].classList.remove("pac-dot");
+            eatPacDot();
             squares[position].classList.add("pac-man");
             } else if (position === 189) {
                 squares[position].classList.remove("pac-man");
