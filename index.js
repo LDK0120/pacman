@@ -13,12 +13,12 @@ const gridLayout = [
     1,1,1,0,2,0,2,2,2,2,2,2,2,0,2,0,1,1,1,
     0,0,0,0,2,0,0,0,2,0,2,0,0,0,2,0,0,0,0,
     0,2,2,2,2,0,2,2,2,0,2,2,2,0,2,2,2,2,0,
-    0,2,0,0,2,0,2,0,0,0,0,0,2,0,2,0,0,2,0,
+    0,4,0,0,2,0,2,0,0,0,0,0,2,0,2,0,0,2,0,
     0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,
     0,2,0,0,2,0,0,0,2,0,2,0,0,0,2,0,0,2,0,
-    0,2,2,2,2,2,2,0,2,0,2,0,2,2,2,2,2,2,0,
-    0,2,0,0,0,0,2,0,2,0,2,0,2,0,0,0,0,2,0,
-    0,4,2,2,2,2,2,2,2,0,2,2,2,2,2,2,2,4,0,
+    0,2,2,2,2,2,2,0,2,0,2,0,4,2,2,2,2,2,0,
+    0,2,0,0,0,0,0,0,2,0,2,0,2,0,0,0,0,0,0,
+    0,2,2,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,0,
     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 ];
 
@@ -87,8 +87,10 @@ function move(event) {
             position -= 1;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
-            } else if (squares[position].classList.contains("empty-wall")) {
-                alert("game over");
+            } else if (position === 171) {
+                squares[position].classList.remove("pac-man");
+                position = 189;
+                squares[position].classList.add("pac-man");
             }
             break;
         case "ArrowRight":
@@ -97,8 +99,10 @@ function move(event) {
             position += 1;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
-            } else if (squares[position].classList.contains("empty-wall")) {
-                alert("game over");
+            } else if (position === 189) {
+                squares[position].classList.remove("pac-man");
+                position = 171;
+                squares[position].classList.add("pac-man");
             }
             break;
     }
