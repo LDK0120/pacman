@@ -63,42 +63,41 @@ squares[180].classList.add("pac-man");
 //allow player to move pacman:
 function move(event) {
      let keyPressed = event.key;
-     squares[position].classList.remove("pac-man");
 
     switch (keyPressed) {
         case "ArrowDown":
-            if (position < 380) {
+            if (position < 380 && squares[position + 19].classList.contains("wall") !== true) {
+            squares[position].classList.remove("pac-man");
             position += 19;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
-            } else {
-                alert("game over");
             }
             break;
         case "ArrowUp":
-            if (position >= 19) {
+            if (position >= 19 && squares[position - 19].classList.contains("wall") !== true) {
+            squares[position].classList.remove("pac-man");
             position -= 19;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
-            } else {
-                alert("game over");
             }
             break;
         case "ArrowLeft":
-            if (position % width !== 0) {
+            if (position % width !== 0 && squares[position - 1].classList.contains("wall") !== true) {
+            squares[position].classList.remove("pac-man");
             position -= 1;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
-            } else {
+            } else if (squares[position].classList.contains("empty-wall")) {
                 alert("game over");
             }
             break;
         case "ArrowRight":
-            if (position % width <  18) {
+            if (position % width <  18 && squares[position + 1].classList.contains("wall") !== true) {
+            squares[position].classList.remove("pac-man");
             position += 1;
             squares[position].classList.remove("pac-dot");
             squares[position].classList.add("pac-man");
-            } else {
+            } else if (squares[position].classList.contains("empty-wall")) {
                 alert("game over");
             }
             break;
@@ -107,6 +106,5 @@ function move(event) {
 
 document.addEventListener("keyup", move);
 
-//need to make sure pacmand is blocked from moving if there is a wall.
 //need to generate 4 ghosts where pacman and power-pellet are not present.
 
