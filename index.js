@@ -52,6 +52,11 @@ function createSquares () {
 
 createSquares();
 
+const btn = document.querySelector(".btn");
+btn.addEventListener("click", start);
+
+
+function start() {
 //create pacman in the middle when the game starts: index of 180.        
 let position = 218;            
 squares[position].classList.remove("pac-dot");
@@ -192,14 +197,24 @@ function moveGhost(ghost) {
     }, ghost.speed);
 }
 
-
+//check for game over:
 function gameOver() {
     if (!squares[position].classList.contains("scared") && squares[position].classList.contains("ghost")) {
                 score.innerHTML = "GAME OVER! YOU LOSE!";
                 ghosts.forEach(ghost => clearInterval(ghost.timerId));
                 document.removeEventListener("keyup", move);
+                btn.innerHTML = "RESTART";
+
+                if(btn.innerHTML === "RESTART") {
+
+                    function restart() {
+                        location.reload();
+                    }
+                    btn.addEventListener("click", restart);
+                }
             }           
         }
+    }
 
 
 
