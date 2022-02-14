@@ -131,6 +131,8 @@ function move(event) {
             } 
             break;
     }
+
+    win();
  }
 
 document.addEventListener("keyup", move);
@@ -160,7 +162,7 @@ moveGhost(ghost);
 });
 
 
-//Give ghosts the function to move around and catch Pacman:
+//Give ghosts the function to move around and catch Pacman & Pacman to eat scared ghosts:
 
 function moveGhost(ghost) {
 
@@ -200,7 +202,7 @@ function moveGhost(ghost) {
 //check for game over:
 function gameOver() {
     if (!squares[position].classList.contains("scared") && squares[position].classList.contains("ghost")) {
-                score.innerHTML = "GAME OVER! YOU LOSE!";
+                score.innerHTML = `${currentScore}<br />GAME OVER! YOU LOSE!`;
                 ghosts.forEach(ghost => clearInterval(ghost.timerId));
                 document.removeEventListener("keyup", move);
                 btn.innerHTML = "RESTART";
@@ -214,6 +216,26 @@ function gameOver() {
                 }
             }           
         }
+
+//check for win:
+function win() {
+    if (currentScore >= 300) {
+        score.innerHTML = `${currentScore}<br />YOU WIN!`;
+
+        ghosts.forEach(ghost => clearInterval(ghost.timerId));
+                document.removeEventListener("keyup", move);
+                btn.innerHTML = "RESTART";
+
+                if(btn.innerHTML === "RESTART") {
+
+                    function restart() {
+                        location.reload();
+                    }
+                    btn.addEventListener("click", restart);
+                }
+    }
+}
+
     }
 
 
