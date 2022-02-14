@@ -76,7 +76,7 @@ function eatPacDot() {
         const isScaredTimeoutId = setTimeout(function() {
             ghosts.forEach(ghost => ghost.isScared = false);
         }, 10000);
-    } else {
+        } else {
         squares[position].classList.add("pac-man");
     }
 }
@@ -151,10 +151,11 @@ let ghosts = [
 ]
 
 ghosts.forEach( ghost => {squares[ghost.startingIndex].classList.add(ghost.className, 'ghost');
+moveGhost(ghost);
 });
 
 
-//Give ghosts the function to move around
+//Give ghosts the function to move around and catch Pacman:
 
 function moveGhost(ghost) {
 
@@ -178,20 +179,29 @@ function moveGhost(ghost) {
             if (ghost.isScared) {
                 squares[ghost.currentIndex].classList.add("scared");
             }
-    }, ghost.speed);
 
-    // if (ghost.isScared) {
-    //     clearInterval.setInterval(ghost.timerId);
-    // }
+            if (ghost.isScared && squares[ghost.currentIndex].classList.contains("pac-man")) {
+                currentScore += 100;
+                score.innerHTML = currentScore;
+                squares[ghost.currentIndex].classList.remove(ghost.className, "ghost", "scared");
+                ghost.currentIndex = ghost.startingIndex;
+                squares[ghost.currentIndex].classList.add("ghost", ghost.className);
+            }
+
+            gameOver();
+    }, ghost.speed);
 }
 
-ghosts.forEach( ghost => moveGhost(ghost));
+
+function gameOver() {
+    if (!squares[position].classList.contains("scared") && squares[position].classList.contains("ghost")) {
+                score.innerHTML = "GAME OVER! YOU LOSE!";
+                ghosts.forEach(ghost => clearInterval(ghost.timerId));
+                document.removeEventListener("keyup", move);
+            }           
+        }
 
 
 
-
-
-
-    
-   
+        
        
