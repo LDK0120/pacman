@@ -7,7 +7,7 @@ html {
   --color-empty: #011f3c;
   --color-pac-dot: gold;
   --color-pac-man: rgb(37, 243, 10);
-  --color-power-pellet: red;
+  --color-power-pellet: rgb(69, 43, 214);
   --color-label: #fe992e;
 }
 
@@ -103,4 +103,29 @@ li {
 .power-pallet {
   background-color: var(--color-power-pellet);
   border-radius: 10px;
+}
+
+/* ghosts */
+.blinky {
+  background: red;
+  border-radius: 10px;
+  border: none;
+}
+
+.pinky {
+  background: pink;
+  border-radius: 10px;
+  border: none;
+}
+
+.inky {
+  background: lightskyblue;
+  border-radius: 10px;
+  border: none;
+}
+
+.clyde {
+  background: orange;
+  border-radius: 10px;
+  border: none;
 }

@@ -1,15 +1,16 @@
+//construct game layout:
 const gridLayout = [
     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
     0,4,2,2,2,2,2,2,2,0,2,2,2,2,2,2,2,4,0,
-    0,2,0,0,2,0,0,0,2,0,2,0,0,0,2,0,0,2,0,
-    0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,
-    0,2,0,0,2,0,2,0,0,0,0,0,2,0,2,0,0,2,0,
-    0,2,2,2,2,0,2,2,2,0,2,2,2,0,2,2,2,2,0,
-    0,0,0,0,2,0,0,0,2,0,2,0,0,0,2,0,0,0,0,
-    1,1,1,0,2,0,2,2,2,2,2,2,2,0,2,0,1,1,1,
-    0,0,0,0,2,0,2,0,0,2,0,0,2,0,2,0,0,0,0,
-    1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,
-    0,0,0,0,2,0,2,0,0,2,0,0,2,0,2,0,0,0,0,
+    0,2,0,0,0,0,0,0,2,0,2,0,0,0,2,0,0,2,0,
+    0,2,2,2,2,2,2,0,2,2,2,0,2,2,2,2,2,2,0,
+    0,2,0,0,2,0,2,2,2,0,2,2,2,0,2,0,0,2,0,
+    0,2,2,2,2,0,2,0,0,0,0,0,2,0,2,2,2,2,0,
+    0,0,0,0,2,0,2,2,2,2,2,2,2,0,2,0,0,0,0,
+    1,1,1,0,2,0,2,0,0,1,0,0,2,0,2,0,1,1,1,
+    0,0,0,0,2,0,2,0,1,1,1,0,2,0,2,0,0,0,0,
+    1,2,2,2,2,2,2,0,1,1,1,0,2,2,2,2,2,2,1,
+    0,0,0,0,2,0,2,0,0,0,0,0,2,0,2,0,0,0,0,
     1,1,1,0,2,0,2,2,2,2,2,2,2,0,2,0,1,1,1,
     0,0,0,0,2,0,0,0,2,0,2,0,0,0,2,0,0,0,0,
     0,2,2,2,2,0,2,2,2,0,2,2,2,0,2,2,2,2,0,
@@ -21,8 +22,6 @@ const gridLayout = [
     0,2,2,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,0,
     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 ];
-
-//console.log(gridLayout.length);
 
 const container = document.querySelector(".container");
 const squares = [];
@@ -52,13 +51,13 @@ function createSquares () {
 }
 
 createSquares();
-//console.log(squares);
 
 //create pacman in the middle when the game starts: index of 180.        
-let position = 180;            
-squares[180].classList.remove("pac-dot");
-squares[180].classList.add("pac-man");
+let position = 218;            
+squares[position].classList.remove("pac-dot");
+squares[position].classList.add("pac-man");
 
+//get score for eating pac-dot:
 function eatPacDot() {
 
     if (squares[position].classList.contains("pac-dot")) {
@@ -72,7 +71,6 @@ function eatPacDot() {
         
 
 }
-
 
 //allow player to move pacman:
 function move(event) {
@@ -123,5 +121,64 @@ function move(event) {
 
 document.addEventListener("keyup", move);
 
-//need to generate 4 ghosts where pacman and power-pellet are not present.
+//make 4 different ghosts: Blinky, Pinky, Inky and Clyde
 
+class Ghost {
+    constructor(className, startingIndex, speed) {
+    this.className = className,
+    this.startingIndex = startingIndex,
+    this.speed = speed,
+    this.currentIndex = startingIndex,
+    this.isScared = false,
+    this.timerId = NaN
+    }
+}
+
+let ghosts = [
+    new Ghost('blinky', 142, 225),
+    new Ghost('pinky', 161, 225),
+    new Ghost('inky', 160, 225),
+    new Ghost('clyde', 162, 225),
+]
+
+ghosts.forEach( ghost => {squares[ghost.startingIndex].classList.add(ghost.className, 'ghost');
+});
+
+
+//Give ghosts the function to move around
+
+function moveGhost(ghost) {
+
+    const directions = [+1, -1, +width, -width];
+    let direction = directions[Math.floor(Math.random()*4)];
+
+    ghost.timerId = setInterval(function() {
+
+        if(
+            !squares[ghost.currentIndex + direction].classList.contains('wall') && 
+            !squares[ghost.currentIndex + direction].classList.contains('ghost') &&
+            (ghost.currentIndex + direction) !== 171 &&
+            (ghost.currentIndex + direction) !== 189) {
+            squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost');
+            ghost.currentIndex += direction;
+            squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+            } else {
+                direction = directions[Math.floor(Math.random()*4)];
+            }
+    }, ghost.speed);
+
+    // if (ghost.isScared) {
+    //     clearInterval.setInterval(ghost.timerId);
+    // }
+}
+
+ghosts.forEach( ghost => moveGhost(ghost));
+
+
+
+
+
+
+    
+   
+       
