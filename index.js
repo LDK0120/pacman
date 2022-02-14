@@ -45,7 +45,7 @@ function createSquares () {
         } else if (gridLayout[i] === 2) {
             squares[i].classList.add("pac-dot");
         } else if (gridLayout[i] === 4) {
-            squares[i].classList.add("power-pallet");
+            squares[i].classList.add("power-pellet");
         }
     }
 }
@@ -65,11 +65,20 @@ function eatPacDot() {
         currentScore++;
         score.innerHTML = `${currentScore}`;
         squares[position].classList.add("pac-man");
+    } else if (squares[position].classList.contains("power-pellet")) {
+        squares[position].classList.remove("power-pellet");
+        squares[position].classList.add("pac-man");
+        currentScore += 10;
+        score.innerHTML = `${currentScore}`;
+    
+        ghosts.forEach(ghost => ghost.isScared = true);
+
+        const isScaredTimeoutId = setTimeout(function() {
+            ghosts.forEach(ghost => ghost.isScared = false);
+        }, 10000);
     } else {
         squares[position].classList.add("pac-man");
     }
-        
-
 }
 
 //allow player to move pacman:
@@ -82,7 +91,7 @@ function move(event) {
             squares[position].classList.remove("pac-man");
             position += 19;
             eatPacDot();
-            }
+            } 
             break;
         case "ArrowUp":
             if (position >= 19 && squares[position - 19].classList.contains("wall") !== true) {
@@ -90,7 +99,7 @@ function move(event) {
             position -= 19;
             eatPacDot();
             squares[position].classList.add("pac-man");
-            }
+            } 
             break;
         case "ArrowLeft":
             if (position % width !== 0 && squares[position - 1].classList.contains("wall") !== true) {
@@ -102,7 +111,7 @@ function move(event) {
                 squares[position].classList.remove("pac-man");
                 position = 189;
                 squares[position].classList.add("pac-man");
-            }
+            } 
             break;
         case "ArrowRight":
             if (position % width <  18 && squares[position + 1].classList.contains("wall") !== true) {
@@ -114,7 +123,7 @@ function move(event) {
                 squares[position].classList.remove("pac-man");
                 position = 171;
                 squares[position].classList.add("pac-man");
-            }
+            } 
             break;
     }
  }
@@ -159,11 +168,15 @@ function moveGhost(ghost) {
             !squares[ghost.currentIndex + direction].classList.contains('ghost') &&
             (ghost.currentIndex + direction) !== 171 &&
             (ghost.currentIndex + direction) !== 189) {
-            squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost');
+            squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', "scared");
             ghost.currentIndex += direction;
             squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
             } else {
                 direction = directions[Math.floor(Math.random()*4)];
+            }
+
+            if (ghost.isScared) {
+                squares[ghost.currentIndex].classList.add("scared");
             }
     }, ghost.speed);
 
